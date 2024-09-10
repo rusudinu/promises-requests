@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Car, CarService} from "./car.service";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgForOf} from "@angular/common";
@@ -13,7 +13,7 @@ import {NgForOf} from "@angular/common";
   templateUrl: './car.component.html',
   styleUrl: './car.component.css'
 })
-export class CarComponent {
+export class CarComponent implements OnInit {
   cars: Car[] = [];
   carForm: FormGroup;
   editMode: boolean = false;
@@ -28,10 +28,22 @@ export class CarComponent {
 
   ngOnInit(): void {
     this.getCars();
+    //this.getCarsFetch();
+    //this.getCarsAxios()
   }
 
   getCars(): void {
     this.carService.getCars().subscribe(cars => this.cars = cars);
+  }
+
+  async getCarsAxios(): Promise<void> {
+    this.cars = await this.carService.getCarsAxios();
+    this.carService.getCarsAxios().then(cars => this.cars = cars);
+  }
+
+  async getCarsFetch(): Promise<void> {
+    this.cars = await this.carService.getCarsFetch();
+    this.carService.getCarsFetch().then(cars => this.cars = cars);
   }
 
   addCar(): void {
