@@ -1,0 +1,23 @@
+<div>
+  <h1>Car Management</h1>
+
+  <h2>Add Car</h2>
+  <form [formGroup]="carForm" (ngSubmit)="editMode ? updateCar() : addCar()">
+    <label for="brand">Brand:</label>
+    <input type="text" id="brand" formControlName="brand" required>
+    <label for="model">Model:</label>
+    <input type="text" id="model" formControlName="model" required>
+    <button type="submit">{{ editMode ? 'Update Car' : 'Add Car' }}</button>
+  </form>
+
+  <h2>Cars List</h2>
+  <ul>
+    <li *ngFor="let car of cars">
+      {{ car.brand }} - {{ car.model }}
+      <button (click)="editCar(car)">Edit</button>
+      <button (click)="deleteCar(car.id)">Delete</button>
+    </li>
+  </ul>
+
+  <button (click)="clearCars()">Clear All Cars</button>
+</div>
